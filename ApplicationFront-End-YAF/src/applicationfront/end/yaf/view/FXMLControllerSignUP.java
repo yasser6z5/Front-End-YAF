@@ -85,9 +85,6 @@ public class FXMLControllerSignUP implements Initializable {
             throw new Exception( "La contraseña debe tener al menos 8 caracteres.");
           
             }
-            
-            
-            
             //CONEXIÓN CON EL BACKEND
             //// Instanciar el objeto entidad/modelo con los datos del formulario
             User user = new User();
@@ -113,7 +110,7 @@ public class FXMLControllerSignUP implements Initializable {
         showAlert("¡Usuario registrado con éxito!", AlertType.INFORMATION);
             clearFields();
         }catch (Exception e) {
-            showAlert(e.getMessage(), AlertType.ERROR);
+            showAlert("User already exists!!", AlertType.ERROR);
         } 
         
     }

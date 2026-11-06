@@ -4,7 +4,8 @@
  */
 package applicationfront.end.yaf.client;
 
-import jakarta.ws.rs.ClientErrorException;
+import applicationfront.end.yaf.model.User;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
 
@@ -33,62 +34,63 @@ public class UserRESTClient {
         webTarget = client.target(BASE_URI).path("entities.user");
     }
 
-    public String countREST() throws ClientErrorException {
+    public String countREST() throws WebApplicationException {
         WebTarget resource = webTarget;
         resource = resource.path("count");
         return resource.request(jakarta.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
     }
 //CHNGE PASSWORD
-    public void edit_XML(Object requestEntity, String id) throws ClientErrorException {
+    public void edit_XML(Object requestEntity, String id) throws WebApplicationException {
    webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request(jakarta.ws.rs.core.MediaType.APPLICATION_XML).put(jakarta.ws.rs.client.Entity.entity(requestEntity, jakarta.ws.rs.core.MediaType.APPLICATION_XML));   
     }
 //CHNGE PASSWORD
-    public void edit_JSON(Object requestEntity, String id) throws ClientErrorException {
+    public void edit_JSON(Object requestEntity, String id) throws WebApplicationException {
 webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request(jakarta.ws.rs.core.MediaType.APPLICATION_JSON).put(jakarta.ws.rs.client.Entity.entity(requestEntity, jakarta.ws.rs.core.MediaType.APPLICATION_JSON));    }
 
-    public <T> T find_XML(Class<T> responseType, String id) throws ClientErrorException {
+    public <T> T find_XML(Class<T> responseType, String id) throws WebApplicationException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
-    public <T> T find_JSON(Class<T> responseType, String id) throws ClientErrorException {
+    public <T> T find_JSON(Class<T> responseType, String id) throws WebApplicationException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T findRange_XML(Class<T> responseType, String from, String to) throws ClientErrorException {
+    public <T> T findRange_XML(Class<T> responseType, String from, String to) throws WebApplicationException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, to}));
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
-    public <T> T findRange_JSON(Class<T> responseType, String from, String to) throws ClientErrorException {
+    public <T> T findRange_JSON(Class<T> responseType, String from, String to) throws WebApplicationException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, to}));
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 //SIGN UP
-   public void create_XML(Object requestEntity) throws ClientErrorException {
-        webTarget.request(jakarta.ws.rs.core.MediaType.APPLICATION_XML).post(jakarta.ws.rs.client.Entity.entity(requestEntity, jakarta.ws.rs.core.MediaType.APPLICATION_XML));
+   public void create_XML(Object requestEntity) throws WebApplicationException {
+        webTarget.request(jakarta.ws.rs.core.MediaType.APPLICATION_XML)
+                .post(jakarta.ws.rs.client.Entity.entity(requestEntity, jakarta.ws.rs.core.MediaType.APPLICATION_XML),User.class);
     }
 //SIGN UP
-   public void create_JSON(Object requestEntity) throws ClientErrorException {
+   public void create_JSON(Object requestEntity) throws WebApplicationException {
         webTarget.request(jakarta.ws.rs.core.MediaType.APPLICATION_JSON).post(jakarta.ws.rs.client.Entity.entity(requestEntity, jakarta.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 //SIGN IN
-    public <T> T findAll_XML(Class<T> responseType) throws ClientErrorException {
+    public <T> T findAll_XML(Class<T> responseType) throws WebApplicationException {
         WebTarget resource = webTarget;
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 //SIGN IN
-    public <T> T findAll_JSON(Class<T> responseType) throws ClientErrorException {
+    public <T> T findAll_JSON(Class<T> responseType) throws WebApplicationException {
         WebTarget resource = webTarget;
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public void remove(String id) throws ClientErrorException {
+    public void remove(String id) throws WebApplicationException {
         webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request().delete();
     }
 
