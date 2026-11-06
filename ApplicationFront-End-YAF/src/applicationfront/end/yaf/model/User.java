@@ -152,7 +152,9 @@ public class User implements Serializable {
     }
 
     public void setPhone(Integer phone) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (phone != null) {
+            this.phone = java.math.BigInteger.valueOf(phone);
+        }
     }
     
 }

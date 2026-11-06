@@ -7,6 +7,7 @@ package applicationfront.end.yaf.view;
 import applicationfront.end.yaf.client.UserRESTClient;
 import applicationfront.end.yaf.model.User;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -90,6 +91,11 @@ public class FXMLControllerSignUP implements Initializable {
             //CONEXIÓN CON EL BACKEND
             //// Instanciar el objeto entidad/modelo con los datos del formulario
             User user = new User();
+            //GENERAR EL ID ALEATORIAMNETE 
+            Long id = 0l;
+            while (id<=0)
+                id = new Random().nextLong();
+            user.setId(id);
             user.setFirstName(firstName);
             user.setMiddleInitial(middleInitial);
             user.setLastName(lastName);
@@ -104,7 +110,8 @@ public class FXMLControllerSignUP implements Initializable {
             UserRESTClient client = new UserRESTClient();
             client.create_XML(user);
         
-        
+        showAlert("¡Usuario registrado con éxito!", AlertType.INFORMATION);
+            clearFields();
         }catch (Exception e) {
             showAlert(e.getMessage(), AlertType.ERROR);
         } 
