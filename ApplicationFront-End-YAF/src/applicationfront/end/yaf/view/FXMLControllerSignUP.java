@@ -6,6 +6,8 @@ package applicationfront.end.yaf.view;
 
 import applicationfront.end.yaf.client.UserRESTClient;
 import applicationfront.end.yaf.model.User;
+import jakarta.ws.rs.WebApplicationException;
+
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -54,9 +56,6 @@ public class FXMLControllerSignUP implements Initializable {
    //ENVIAR PETICION HTTP CON METODO GET ALL
     //backend URL= http://localhost:8080/WebYAFapplication/webresources
     
-   
-    
-   
     //Ejecutar el método handleSignUp().
     public void handleSignUp(ActionEvent event){
         //Lectura de campos
@@ -75,15 +74,15 @@ public class FXMLControllerSignUP implements Initializable {
             
             // 2. Validaciones locales
             if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ){
-                throw new Exception("Por favor, completa los campos obligatorios.");
+                throw new Exception("Please fill in all required fields.");
             }
             if (!password.equals(confirmPassword)) {
-            throw new Exception( "Las contraseñas no coinciden.");
+            throw new Exception( "Passwords do not match.");
             
             }
             if (password.length() < 8) {
-            throw new Exception( "La contraseña debe tener al menos 8 caracteres.");
-          
+            throw new Exception( "Password must be at least 8 characters long.");
+            
             }
             //CONEXIÓN CON EL BACKEND
             //// Instanciar el objeto entidad/modelo con los datos del formulario
@@ -107,15 +106,17 @@ public class FXMLControllerSignUP implements Initializable {
             UserRESTClient client = new UserRESTClient();
             client.create_XML(user);
         
-        showAlert("¡Usuario registrado con éxito!", AlertType.INFORMATION);
+        showAlert("User registered successfully!", AlertType.INFORMATION);
             clearFields();
+        }catch (WebApplicationException e) {      
+            showAlert("User gmail already exists!!", Alert.AlertType.ERROR);  
+        } catch (NumberFormatException e) {
+            showAlert("The phone number or ZIP code format is invalid .", Alert.AlertType.ERROR);
         }catch (Exception e) {
-            showAlert("User already exists!!", AlertType.ERROR);
-        } 
+            showAlert(e.getMessage(), Alert.AlertType.ERROR);
+        }
         
     }
-    
- 
    
  //Ejecutar el método handleCancel().
    @FXML
