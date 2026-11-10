@@ -50,13 +50,13 @@ public class FXMLControllerSignIn implements Initializable {
     @FXML
     private Label lblMessage;
 
-    // Expresión regular para validar el email
+    // Regular expression to validate email
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Limpiar el mensaje de error cuando el usuario modifique los campos (Requisito de Diseño)
+        // Clear the error message when the user modifies the fields
         txtEmail.textProperty().addListener((observable, oldValue, newValue) -> {
             lblMessage.setText("");
         });
@@ -70,31 +70,31 @@ public class FXMLControllerSignIn implements Initializable {
         String email = txtEmail.getText().trim();
         String password = pwdPassword.getText();
 
-        // 1. Validaciones Locales
+        // 1. Local Validations
         if (email.isEmpty() || password.isEmpty()) {
-            lblMessage.setText("Por favor, introduce tu email y contraseña.");
+            lblMessage.setText("Please enter your email and password.");
             if (email.isEmpty()) txtEmail.requestFocus();
             else pwdPassword.requestFocus();
             return;
         }
 
         if (!EMAIL_PATTERN.matcher(email).matches()) {
-            lblMessage.setText("Formato de correo electrónico no válido.");
+            lblMessage.setText("Invalid email format.");
             txtEmail.requestFocus();
             return;
         }
 
-        // 2. Conexión con el BackEnd (Sign In)
+        // 2. BackEnd Connection (Sign In)
         try {
             UserRESTClient client = new UserRESTClient();
             
-            // Obtenemos todos los usuarios (según el método findAll_XML de vuestro RESTClient)
+            // Get all users 
             List<User> userList = client.findAll_XML(new GenericType<List<User>>() {});
             
             boolean loginSuccess = false;
             User loggedInUser = null;
             
-            // Comprobamos si las credenciales coinciden con algún usuario de la BD
+            // Check if credentials match any user in the DB
             if (userList != null) {
                 for (User u : userList) {
                     if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
@@ -106,17 +106,17 @@ public class FXMLControllerSignIn implements Initializable {
             }
 
             if (loginSuccess) {
-                // Login correcto: Guardar usuario y abrir MainWindow
+                // Correct login: Save user and open MainWindow
                 client.close();
                 abrirMainWindow(event, loggedInUser);
             } else {
-                lblMessage.setText("Credenciales incorrectas o usuario no registrado.");
+                lblMessage.setText("Incorrect credentials or unregistered user.");
             }
 
         } catch (WebApplicationException ex) {
-            showAlert("Error al conectar con el servidor. ¿Está Glassfish encendido?", AlertType.ERROR);
+            showAlert("Error connecting to the server. Is Glassfish running?", AlertType.ERROR);
         } catch (Exception ex) {
-            showAlert("Error inesperado: " + ex.getMessage(), AlertType.ERROR);
+            showAlert("Unexpected error: " + ex.getMessage(), AlertType.ERROR);
         }
     }
 
@@ -125,7 +125,7 @@ public class FXMLControllerSignIn implements Initializable {
         try {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             
-            // Cargar la vista Sign Up de Favor
+            // Load the Sign Up view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/applicationfront/end/yaf/view/SignUP.fxml"));
             Parent root = loader.load();
             
@@ -134,11 +134,11 @@ public class FXMLControllerSignIn implements Initializable {
             signUpStage.setResizable(false);
             signUpStage.setScene(new Scene(root));
             signUpStage.show();
-            
-            currentStage.close(); 
+            // Sign in window is not closed
+            //currentStage.close(); 
             
         } catch (IOException e) {
-            showAlert("No se pudo cargar la ventana de Registro.", AlertType.ERROR);
+            showAlert("Could not load the Registration window.", AlertType.ERROR);
         }
     }
     
@@ -146,11 +146,11 @@ public class FXMLControllerSignIn implements Initializable {
         try {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             
-            // Cargar la vista Main Window
+            // Load the Main Window view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/applicationfront/end/yaf/view/MainWindow.fxml"));
             Parent root = loader.load();
             
-            // (Opcional) Pasar los datos del usuario al controlador de la Main Window
+            // (Optional) Pass user data to the Main Window controller
             FXMLControllerMainWindow mainController = loader.getController();
             mainController.initData(user);
             
@@ -158,12 +158,12 @@ public class FXMLControllerSignIn implements Initializable {
             mainStage.setTitle("Main Window - Application Dashboard");
             mainStage.setScene(new Scene(root, 800, 600));
             
-            // Controlar el cierre con la X de la ventana
+            // Handle closing with the window's X button
             mainStage.setOnCloseRequest(e -> {
                 Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Confirmar salida");
+                alert.setTitle("Confirm Exit");
                 alert.setHeaderText(null);
-                alert.setContentText("¿Estás seguro de que deseas salir de la aplicación?");
+                alert.setContentText("Are you sure you want to exit the application?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() != ButtonType.OK) {
                     e.consume();
@@ -174,7 +174,7 @@ public class FXMLControllerSignIn implements Initializable {
             currentStage.close();
             
         } catch (IOException e) {
-            showAlert("No se pudo cargar la ventana Principal.", AlertType.ERROR);
+            showAlert("Could not load the Main Window.", AlertType.ERROR);
         }
     }
 

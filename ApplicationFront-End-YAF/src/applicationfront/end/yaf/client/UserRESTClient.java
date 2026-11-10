@@ -8,6 +8,7 @@ import applicationfront.end.yaf.model.User;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.GenericType;
 
 
 /**
@@ -80,7 +81,7 @@ webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request(
         webTarget.request(jakarta.ws.rs.core.MediaType.APPLICATION_JSON).post(jakarta.ws.rs.client.Entity.entity(requestEntity, jakarta.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 //SIGN IN
-    public <T> T findAll_XML(Class<T> responseType) throws WebApplicationException {
+    public <T> T findAll_XML(GenericType<T> responseType) throws WebApplicationException {
         WebTarget resource = webTarget;
         return resource.request(jakarta.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
