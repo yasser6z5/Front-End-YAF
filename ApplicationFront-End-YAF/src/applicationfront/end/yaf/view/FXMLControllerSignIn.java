@@ -126,7 +126,8 @@ public class FXMLControllerSignIn implements Initializable {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             
             // Load the Sign Up view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/applicationfront/end/yaf/view/SignUP.fxml"));
+            //FIXME: spell view name correctly RESOLVED
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/applicationfront/end/yaf/view/SignUP.FXML"));
             Parent root = loader.load();
             
             Stage signUpStage = new Stage();
