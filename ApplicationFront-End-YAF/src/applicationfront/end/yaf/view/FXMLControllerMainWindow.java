@@ -54,26 +54,28 @@ public class FXMLControllerMainWindow implements Initializable {
     }
 
     @FXML
-    private void handleChangePassword(ActionEvent event) {
-        try {
+private void handleChangePassword(ActionEvent event) {
+    try {
             // Cargar la vista de Change Password (de Adam)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/applicationfront/end/yaf/view/ChangePassword.fxml"));
-            Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/applicationfront/end/yaf/view/ChangePassword.fxml"));
+        Parent root = loader.load();
+       
+        // Pasa los datos del usuario logueado al controlador de Adam
+        FXMLControllerChangePassword controller = loader.getController();
+        controller.initData(currentUser);
+       
+        Stage stage = new Stage();
+        stage.setTitle("Change Password");
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
             
-            Stage stage = new Stage();
-            stage.setTitle("Change Password");
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            
-            // Pasar el usuario a la ventana de cambio de clave
-            // FXMLControllerChangePassword controller = loader.getController();
-            // controller.initData(currentUser);
-            
-            stage.show();
-        } catch (IOException e) {
-            showAlert("No se pudo cargar la vista de Cambio de Contraseña.", AlertType.ERROR);
-        }
+        stage.show();
+    } catch (IOException e) {
+        showAlert("Could not load the Change Password view.", AlertType.ERROR);
+        e.printStackTrace();
     }
+}
+
 
     @FXML
     private void handleSignOut(ActionEvent event) {
