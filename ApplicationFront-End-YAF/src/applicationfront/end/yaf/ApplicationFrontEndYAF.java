@@ -24,7 +24,8 @@ public class ApplicationFrontEndYAF extends Application {
     @Override
     public void start(Stage stage) throws Exception {
     //cargar sign in
-        Parent root = FXMLLoader.load(getClass().getResource("view/Signin.FXML"));  
+        //FIXME: spell view name correctly RESOLVED
+        Parent root = FXMLLoader.load(getClass().getResource("view/SignIn.fxml"));  
        
       Scene scene = new Scene(root);
         
