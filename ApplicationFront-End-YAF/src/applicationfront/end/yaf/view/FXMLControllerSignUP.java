@@ -14,19 +14,19 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * this is my controller view of Sign Up
  * @author Godsfavor
  */
-public class FXMLControllerSignUP implements Initializable {
-    
-   
+public class FXMLControllerSignUP {
     @FXML 
     private TextField firstNameField;
     @FXML 
@@ -49,14 +49,27 @@ public class FXMLControllerSignUP implements Initializable {
     private PasswordField passwordField;
     @FXML 
     private PasswordField confirmPasswordField;
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    /**
+     * Initialization method.
+     * @todo Add Actionevent handler handleSignUp to btnSignUp using setOnAction       
+     *       convenience method and a method reference. Remember to assign fx:id
+     *       value to the button in the FXML and define an FXML annotated attribute 
+     *       for it in this controller class.
+     * @param url
+     * @param rb 
+     */
+    @FXML
+    public void initialize() {
+        
     }    
    //ENVIAR PETICION HTTP CON METODO GET ALL
     //backend URL= http://localhost:8080/WebYAFapplication/webresources
-    
-    //Ejecutar el método handleSignUp().
+    /**
+     * Sign Up Action handler.
+     * @todo Mostrar por consola en el tratamiento de excepciones una traza 
+     *       de log tipo warning con el mensaje que se está mostrando al usuario en la ventana.  
+     * @param event 
+     */
     public void handleSignUp(ActionEvent event){
         //Lectura de campos
         try{
@@ -118,16 +131,24 @@ public class FXMLControllerSignUP implements Initializable {
         
     }
    
- //Ejecutar el método handleCancel().
+    /**
+     * Cancel action handler.
+     * @param event 
+     */
    @FXML
     void handleCancel(ActionEvent event) {
         clearFields();
     }
-   // Ejecutar el método goToSignIn().
+    /**
+     * Go to sign in action handler.
+     * @todo Cerrar el currentStage en este método para volver a Sign In.
+     * @param event 
+     */
     @FXML
     void goToSignIn(ActionEvent event)
     {
-      
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
     }
 //
     private void showAlert(String error, AlertType alertType) {
