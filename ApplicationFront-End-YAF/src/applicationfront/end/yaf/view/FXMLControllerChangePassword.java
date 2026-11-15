@@ -38,7 +38,14 @@ private ProgressBar passwordStrengthBar;
 private Label passwordStrengthLabel;
 
 private User currentUser;
-
+/**
+ * @todo Add listener updatePasswordStrength using a method reference instead of a lambda. 
+ * @todo Add Actionevent handler handleSaveAction to Save Changes button using setOnAction       
+ *          convenience method and a method reference. Remember to remove onAction attribute 
+ *          in FXML and define fx:id for the Button element.
+ * @param url
+ * @param rb 
+ */
 @Override
 public void initialize(URL url, ResourceBundle rb) {
 // Real-time password strength indicator
@@ -96,7 +103,11 @@ passwordStrengthLabel.setStyle("-fx-text-fill: #16a34a; -fx-font-weight: bold;")
 break;
 }
 }
-
+/**
+ * @todo Mostrar por consola en las validaciones una traza de log tipo warning 
+ *       con el mensaje que se muestra al usuario en la ventana.  
+ * @param event 
+ */
 @FXML
 private void handleSaveAction(ActionEvent event) {
 String currentPass = currentPasswordField.getText();
