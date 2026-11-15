@@ -64,7 +64,17 @@ public class FXMLControllerSignIn implements Initializable {
             lblMessage.setText("");
         });
     }
-
+    /**
+     * @todo Modificar el tratamiento de excepciones para tratar de forma diferente 
+     *      ProcessingException y WebApplicationException. 
+     *      Para ProcessingException mostrar en la ventana y sacar en una traza de log 
+     *      de tipo SEVERE el mensaje "Server unavailable". 
+     *      Para WebApplicationException mostrar en la ventana y sacar en una traza de log 
+     *      de tipo SEVERE el mensaje "Internal server error: try again or contact support".
+     *      Para cualquier otro tipo de Exception mostrar en la ventana y sacar en 
+     *      una traza de log el mensaje de la excepción obtenido con getMessage(). 
+     * @param event 
+     */
     @FXML
     private void handleSignInAction(ActionEvent event) {
         String email = txtEmail.getText().trim();
