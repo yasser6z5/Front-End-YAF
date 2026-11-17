@@ -6,27 +6,37 @@ package applicationfront.end.yaf.view;
 
 import applicationfront.end.yaf.client.UserRESTClient;
 import applicationfront.end.yaf.model.User;
+import jakarta.validation.Path.Node;
 import jakarta.ws.rs.WebApplicationException;
 
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.swing.Action;
 
 /**
  * this is my controller view of Sign Up
  * @author Godsfavor
  */
 public class FXMLControllerSignUP {
+    
+     private static final Logger logger = Logger.getLogger("applicationfront.end.yaf.view");
+    
     @FXML 
     private TextField firstNameField;
     @FXML 
@@ -49,6 +59,18 @@ public class FXMLControllerSignUP {
     private PasswordField passwordField;
     @FXML 
     private PasswordField confirmPasswordField;
+    
+    private Stage stage;
+
+    /**
+     * Sets the stage associated with this view.
+     *
+     * @param stage The primary {@link Stage} for the Sign In window.
+     */
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+    
     /**
      * Initialization method.
      * @todo Add Actionevent handler handleSignUp to btnSignUp using setOnAction       
@@ -60,7 +82,8 @@ public class FXMLControllerSignUP {
      */
     @FXML
     public void initialize() {
-        
+        logger.info("Initializing Sign Up controller.");
+        btnSignUp.setOnAction(ActionEvent.ACTION((this::handleSignUp));  
     }    
    //ENVIAR PETICION HTTP CON METODO GET ALL
     //backend URL= http://localhost:8080/WebYAFapplication/webresources
@@ -72,6 +95,7 @@ public class FXMLControllerSignUP {
      */
     public void handleSignUp(ActionEvent event){
         //Lectura de campos
+        
         try{
             String firstName = firstNameField.getText();
             String middleInitial = middleIntialField.getText();
@@ -118,14 +142,17 @@ public class FXMLControllerSignUP {
             
             UserRESTClient client = new UserRESTClient();
             client.create_XML(user);
-        
+         logger.info("User registered successfully.");
         showAlert("User registered successfully!", AlertType.INFORMATION);
             clearFields();
-        }catch (WebApplicationException e) {      
+        }catch (WebApplicationException e) {   
+             logger.warning(e.getMessage());
             showAlert("User gmail already exists!!", Alert.AlertType.ERROR);  
         } catch (NumberFormatException e) {
+             logger.severe(e.getMessage());
             showAlert("The phone number or ZIP code format is invalid .", Alert.AlertType.ERROR);
         }catch (Exception e) {
+             logger.severe(e.getMessage());
             showAlert(e.getMessage(), Alert.AlertType.ERROR);
         }
         
@@ -147,7 +174,20 @@ public class FXMLControllerSignUP {
     @FXML
     void goToSignIn(ActionEvent event)
     {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            
+            
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("SignIn.fxml"));
+                        Parent root = loader.load();
+
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (Exception e) {
+                        logger.severe(e.getMessage());
+                        showAlert("Error loading Sign In view.", Alert.AlertType.ERROR);
+                    }
 
     }
 //
@@ -174,6 +214,19 @@ public class FXMLControllerSignUP {
         passwordField.clear();
         confirmPasswordField.clear();
     }
+
+    private static class btnSignUp {
+
+        public btnSignUp() {
+        }
+    }
+
+    private static class tfLogin {
+
+        public tfLogin() {
+        }
+    }
+
     
     
     

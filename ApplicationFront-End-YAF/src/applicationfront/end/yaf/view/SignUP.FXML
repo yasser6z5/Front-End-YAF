@@ -126,8 +126,8 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="42.0" prefWidth="200.0" style="-fx-background-color: #f1f5f9; -fx-text-fill: #334155; -fx-background-radius: 5; -fx-font-weight: bold; -fx-border-color: #cbd5e1; -fx-border-radius: 5;" text="Cancel" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#handleSignUp" prefHeight="42.0" prefWidth="200.0" style="-fx-background-color: #0f172a; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Sign Up" HBox.hgrow="ALWAYS" />
+                        <Button fx:id ="btnCancel" mnemonicParsing="false" onAction="#handleCancel" prefHeight="42.0" prefWidth="200.0" style="-fx-background-color: #f1f5f9; -fx-text-fill: #334155; -fx-background-radius: 5; -fx-font-weight: bold; -fx-border-color: #cbd5e1; -fx-border-radius: 5;" text="Cancel" HBox.hgrow="ALWAYS" />
+                        <Button fx:id ="btnSingUp" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="42.0" prefWidth="200.0" style="-fx-background-color: #0f172a; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold;" text="Sign Up" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
 
