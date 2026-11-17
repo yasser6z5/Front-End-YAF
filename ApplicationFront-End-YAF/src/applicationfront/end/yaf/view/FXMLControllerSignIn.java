@@ -129,10 +129,10 @@ public class FXMLControllerSignIn implements Initializable {
             }
 
         } catch (WebApplicationException ex) {
-            logger.log(Level.SEVERE, "Internal server error: try again or contact support", ex);
+            logger.severe("Internal server error: try again or contact support");
             showAlert("Error connecting to the server. Is Glassfish running?", AlertType.ERROR);
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, "Server unavailable", ex);
+            logger.severe("Server unavailable");
             showAlert("Unexpected error: " + ex.getMessage(), AlertType.ERROR);
         }
     }
@@ -156,7 +156,7 @@ public class FXMLControllerSignIn implements Initializable {
             //currentStage.close(); 
             
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Server unavailable", ex);
+            logger.severe("Server unavailable");
             showAlert("Could not load the Registration window.", AlertType.ERROR);
         }
     }
@@ -193,7 +193,7 @@ public class FXMLControllerSignIn implements Initializable {
             currentStage.close();
             
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Server unavailable", ex);
+            logger.severe("Server unavailable");
             showAlert("Could not load the Main Window.", AlertType.ERROR);
         }
     }
