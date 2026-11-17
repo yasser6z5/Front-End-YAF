@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,9 +31,12 @@ import javafx.stage.Stage;
 /**
  * Controller class for Sign In view (WP2)
  * @author Yasser
+ * @version 1.0
  */
 public class FXMLControllerSignIn implements Initializable {
-
+    
+    private static final Logger logger = Logger.getLogger("applicationfront.end.yaf.view.FXMLControllerSignIn");
+    
     @FXML
     private Label lblTitle;
 
@@ -124,8 +129,10 @@ public class FXMLControllerSignIn implements Initializable {
             }
 
         } catch (WebApplicationException ex) {
+            logger.log(Level.SEVERE, "Internal server error: try again or contact support", ex);
             showAlert("Error connecting to the server. Is Glassfish running?", AlertType.ERROR);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Server unavailable", ex);
             showAlert("Unexpected error: " + ex.getMessage(), AlertType.ERROR);
         }
     }
@@ -149,6 +156,7 @@ public class FXMLControllerSignIn implements Initializable {
             //currentStage.close(); 
             
         } catch (IOException e) {
+            logger.log(Level.SEVERE, "Server unavailable", ex);
             showAlert("Could not load the Registration window.", AlertType.ERROR);
         }
     }
@@ -185,6 +193,7 @@ public class FXMLControllerSignIn implements Initializable {
             currentStage.close();
             
         } catch (IOException e) {
+            logger.log(Level.SEVERE, "Server unavailable", ex);
             showAlert("Could not load the Main Window.", AlertType.ERROR);
         }
     }
